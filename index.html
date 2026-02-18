@@ -29,7 +29,7 @@
               clubLight: '#F6F7F9',
             },
             boxShadow: {
-              card: '0 10px 30px rgba(17, 17, 17, 0.12)',
+              card: '0 14px 36px rgba(17, 17, 17, 0.12)',
               glow: '0 0 0 4px rgba(179, 19, 25, 0.16)',
             },
           },
@@ -43,7 +43,7 @@
       }
 
       .hero-bg {
-        background: radial-gradient(circle at 12% 16%, rgba(255, 255, 255, 0.25) 0%, transparent 50%),
+        background: radial-gradient(circle at 12% 16%, rgba(255, 255, 255, 0.28) 0%, transparent 50%),
           linear-gradient(135deg, #111111 0%, #4b0d10 42%, #b31319 100%);
       }
 
@@ -51,9 +51,9 @@
         content: '';
         position: absolute;
         inset: 0;
-        background-image: radial-gradient(rgba(255, 255, 255, 0.11) 0.5px, transparent 0.5px);
+        background-image: radial-gradient(rgba(255, 255, 255, 0.1) 0.6px, transparent 0.6px);
         background-size: 3px 3px;
-        opacity: 0.24;
+        opacity: 0.22;
         pointer-events: none;
       }
 
@@ -86,6 +86,27 @@
         transition: transform 220ms ease;
       }
 
+      .field {
+        width: 100%;
+        border-radius: 0.75rem;
+        border: 1px solid #d4d4d8;
+        background: #fff;
+        padding: 0.75rem 0.875rem;
+        font-size: 0.95rem;
+        color: #111111;
+        outline: none;
+        transition: border-color 220ms ease, box-shadow 220ms ease;
+      }
+
+      .field:focus-visible {
+        border-color: #b31319;
+        box-shadow: 0 0 0 4px rgba(179, 19, 25, 0.14);
+      }
+
+      .form-msg {
+        min-height: 1.5rem;
+      }
+
       @media (prefers-reduced-motion: reduce) {
         html {
           scroll-behavior: auto;
@@ -95,7 +116,8 @@
         .faq-panel,
         .faq-icon,
         .plan-card,
-        .cta-btn {
+        .cta-btn,
+        .field {
           transition: none !important;
           animation: none !important;
         }
@@ -110,7 +132,7 @@
 
   <body class="bg-clubLight text-clubBlack antialiased">
     <header class="hero-bg relative isolate overflow-hidden">
-      <div class="relative mx-auto max-w-6xl px-4 pb-12 pt-9 sm:px-6 sm:pb-16 sm:pt-12 lg:px-8 lg:pb-20">
+      <div class="relative mx-auto max-w-6xl px-4 pb-12 pt-10 sm:px-6 sm:pb-16 sm:pt-12 lg:px-8 lg:pb-20">
         <div class="reveal max-w-3xl">
           <span
             id="heroBadge"
@@ -121,7 +143,7 @@
             Hacete socio de Young Universitario
           </h1>
           <p id="heroSubtitle" class="mt-4 max-w-2xl text-sm text-white/90 sm:text-base">
-            Apoyá al club en segundos: elegí plan, pagá fácil y completá tus datos para recibir tu carnet.
+            Pagá en segundos y completá tus datos acá mismo para enviarte tu carnet.
           </p>
 
           <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -154,18 +176,18 @@
       <section id="planes" class="reveal mt-10">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <h2 class="text-2xl font-bold sm:text-3xl">Elegí tu plan</h2>
-          <span class="rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-clubRed">Pago por link + formulario</span>
+          <span class="rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-clubRed">Paso 1: Pago</span>
         </div>
 
         <div class="mt-5 grid gap-4 md:grid-cols-2">
           <article
-            class="plan-card rounded-2xl border border-zinc-200 bg-white p-5 shadow-card transition duration-300 hover:-translate-y-1 hover:border-clubRed/50 hover:shadow-glow"
+            class="plan-card rounded-2xl border border-zinc-200 bg-white p-5 shadow-card transition duration-300 hover:-translate-y-1 hover:border-clubRed/45 hover:shadow-glow"
           >
-            <p class="text-sm font-semibold text-zinc-600">Semestral</p>
+            <p class="text-sm font-semibold text-zinc-600">Mensual</p>
             <p id="priceMonthly" class="mt-1 text-4xl font-extrabold text-clubBlack">$0</p>
             <ul class="mt-3 space-y-1 text-sm text-zinc-700">
               <li>• Alta rápida en el momento</li>
-              <li>• Cobertura por 6 meses</li>
+              <li>• Ideal para arrancar hoy</li>
               <li>• Apoyo directo al club</li>
             </ul>
             <div class="mt-4 grid gap-2">
@@ -175,13 +197,10 @@
                 target="_blank"
                 rel="noopener"
                 class="cta-btn inline-flex items-center justify-center rounded-xl bg-clubRed px-4 py-3 text-sm font-bold text-white outline-none ring-clubRed/50 transition duration-200 hover:bg-clubRedDark hover:shadow-glow focus-visible:ring-4"
-                >Pagar semestral</a
+                >Pagar mensual</a
               >
               <a
-                id="formMonthly"
-                href="#"
-                target="_blank"
-                rel="noopener"
+                href="#datos"
                 class="cta-btn inline-flex items-center justify-center rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm font-bold text-clubBlack outline-none ring-clubRed/40 transition duration-200 hover:border-clubRed hover:text-clubRed focus-visible:ring-4"
                 >Completar datos</a
               >
@@ -208,10 +227,7 @@
                 >Pagar anual</a
               >
               <a
-                id="formYearly"
-                href="#"
-                target="_blank"
-                rel="noopener"
+                href="#datos"
                 class="cta-btn inline-flex items-center justify-center rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm font-bold text-clubBlack outline-none ring-clubRed/40 transition duration-200 hover:border-clubRed hover:text-clubRed focus-visible:ring-4"
                 >Completar datos</a
               >
@@ -220,7 +236,83 @@
         </div>
 
         <p class="mt-4 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-semibold text-clubRed">
-          Después del pago, completá tus datos para recibir el carnet.
+          Después del pago completá tus datos para que te enviemos el carnet.
+        </p>
+      </section>
+
+      <section id="datos" class="reveal mt-10">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <h2 class="text-2xl font-bold sm:text-3xl">Completá tus datos</h2>
+          <span class="rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-clubRed">Paso 2: Registro</span>
+        </div>
+
+        <p class="mt-2 max-w-3xl text-sm text-zinc-700">
+          Si ya pagaste, completá este formulario y te contactamos para enviarte tu carnet.
+        </p>
+
+        <form id="socioForm" class="mt-5 rounded-2xl border border-zinc-200 bg-white p-5 shadow-card" novalidate>
+          <div class="grid gap-3 sm:grid-cols-2">
+            <label class="text-sm font-semibold text-zinc-800">
+              Nombre y apellido *
+              <input class="field mt-1" type="text" name="nombre" autocomplete="name" required />
+            </label>
+
+            <label class="text-sm font-semibold text-zinc-800">
+              Cédula de identidad *
+              <input class="field mt-1" type="text" name="ci" inputmode="numeric" required />
+            </label>
+
+            <label class="text-sm font-semibold text-zinc-800">
+              Teléfono / WhatsApp *
+              <input class="field mt-1" type="tel" name="telefono_whatsapp" autocomplete="tel" required />
+            </label>
+
+            <label class="text-sm font-semibold text-zinc-800">
+              Email (opcional)
+              <input class="field mt-1" type="email" name="email" autocomplete="email" />
+            </label>
+
+            <label class="text-sm font-semibold text-zinc-800 sm:col-span-2">
+              Plan *
+              <select class="field mt-1" name="plan" required>
+                <option value="">Seleccioná un plan</option>
+                <option value="mensual">Mensual</option>
+                <option value="anual">Anual</option>
+              </select>
+            </label>
+
+            <label class="text-sm font-semibold text-zinc-800 sm:col-span-2">
+              Referencia/ID de pago (si la tenés)
+              <input class="field mt-1" type="text" name="payment_ref" />
+            </label>
+          </div>
+
+          <input type="text" name="company" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+          <label class="mt-4 flex items-start gap-2 text-sm font-medium text-zinc-700">
+            <input
+              class="mt-0.5 h-4 w-4 rounded border-zinc-300 text-clubRed focus:ring-clubRed"
+              type="checkbox"
+              name="terms"
+              required
+            />
+            Confirmo que los datos son correctos y autorizo el contacto del club.
+          </label>
+
+          <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <button
+              id="submitButton"
+              type="submit"
+              class="cta-btn inline-flex items-center justify-center rounded-xl bg-clubRed px-5 py-3 text-sm font-bold text-white outline-none ring-clubRed/50 transition duration-200 hover:bg-clubRedDark hover:shadow-glow focus-visible:ring-4 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              Enviar datos
+            </button>
+            <p id="formStatus" class="form-msg text-sm font-semibold text-zinc-700" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <p class="mt-3 text-xs text-zinc-600">
+          Si tenés problemas para enviar, escribinos por WhatsApp/Instagram y te ayudamos en el momento.
         </p>
       </section>
 
@@ -281,7 +373,7 @@
               <span class="faq-icon text-lg leading-none text-clubRed">+</span>
             </button>
             <div id="faq-1" class="faq-panel px-4" role="region">
-              <p class="pb-3 text-sm text-zinc-700">Luego del pago y del formulario, el club te contacta para coordinar entrega.</p>
+              <p class="pb-3 text-sm text-zinc-700">Luego del pago y del envío de datos, el club te contacta para coordinar entrega.</p>
             </div>
           </article>
 
@@ -344,10 +436,7 @@
           >Instagram del club</a
         >
         <a
-          id="formBottom"
-          href="#"
-          target="_blank"
-          rel="noopener"
+          href="#datos"
           class="cta-btn inline-flex items-center justify-center rounded-xl bg-clubRed px-4 py-3 text-sm font-bold text-white outline-none ring-clubRed/50 transition duration-200 hover:bg-clubRedDark hover:shadow-glow focus-visible:ring-4"
           >Completar datos</a
         >

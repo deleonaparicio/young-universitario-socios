@@ -1,73 +1,47 @@
 # Landing de socios - Young Universitario
 
-Landing estática para captar socios en evento, optimizada para celular y lista para GitHub Pages.
+Landing estática mobile-first para campaña de socios, lista para GitHub Pages.
 
-## Publicar en GitHub Pages
+## Archivos
 
-1. Subí estos archivos al repo en la rama `main`.
-2. Entrá a `Settings` > `Pages`.
-3. En `Build and deployment`, elegí `Deploy from a branch`.
-4. Seleccioná `main` y carpeta `/ (root)`.
+- `index.html`
+- `config.js`
+- `script.js`
+
+## Deploy en GitHub Pages
+
+1. Subí los cambios a la rama `main`.
+2. Entrá al repo en GitHub.
+3. Andá a `Settings` > `Pages`.
+4. En `Build and deployment` elegí:
+   - `Source`: `Deploy from a branch`
+   - `Branch`: `main`
+   - `Folder`: `/ (root)`
 5. Guardá y esperá el deploy.
-6. Tu landing quedará publicada en la URL de GitHub Pages del repo.
+6. Abrí la URL publicada.
 
-## Cómo actualizar `config.js`
+## Configurar links y precios
 
-Editá solo este archivo para cambiar nombre, ciudad, precios y links:
+Editá solo `config.js`:
 
 ```js
 window.LANDING_CONFIG = {
   CLUB_NAME: 'Young Universitario',
-  CITY: 'Young',
+  CITY: 'Young, Uruguay',
   INSTAGRAM_URL: 'https://instagram.com/tu_perfil',
-  PRICE_MONTHLY: '$ 300 / mes',
-  PRICE_YEARLY: '$ 3.000 / año',
+  PRICE_MONTHLY: '600 pesos uruguayos',
+  PRICE_YEARLY: '1000 pesos uruguayos',
   MP_LINK_MONTHLY: 'https://www.mercadopago.com/...',
   MP_LINK_YEARLY: 'https://www.mercadopago.com/...',
   FORM_URL: 'https://forms.gle/...',
   CONTACT_WHATSAPP: '+598XXXXXXXX',
-  CONTACT_EMAIL: 'socios@younguniversitario.uy',
 };
 ```
 
-Notas:
-- Si falta un link, dejalo como `"(Configurar link)"`.
-- Los precios están como string para que los puedas editar libremente.
-- Usá `CONTACT_WHATSAPP` o `CONTACT_EMAIL` (uno alcanza).
+Si te falta algún link, dejalo como `"(Configurar link)"` y la UI lo marca como pendiente.
 
-## Recomendación de QR para el evento
+## Recomendación para evento
 
-- QR principal (recomendado): 1 QR a la landing.
-- Opcional: 2 QRs extra directos a pago mensual y pago anual.
-
-## Checklist rápido para el evento
-
-- Cartel visible con QR grande y texto corto.
-- Una persona del club ayudando a escanear y pagar.
-- Recordatorio verbal: "Después del pago, completá tus datos".
-- Celular de apoyo con internet por si alguien no tiene datos.
-
-## Guión de 10 segundos (equipo en el evento)
-
-"Escaneá acá, elegí mensual o anual, pagás al toque y completás tus datos. Con eso ya quedás registrado para recibir tu carnet." 
-
-## Snippet opcional para Instagram
-
-### Copy para post
-
-Ya podés hacerte socio de **Young Universitario**.
-En 1 minuto: entrás al link, elegís plan, pagás y completás tus datos.
-
-Tu apoyo nos ayuda a seguir creciendo en Young.
-
-Link en bio.
-
-### Copy para historias
-
-¿Ya sos socio de Young Universitario?
-Entrá al link, pagá y completá tus datos.
-¡Te lleva 1 minuto!
-
-### CTA link en bio
-
-Hacete socio acá.
+- Usar 1 QR principal apuntando a la landing.
+- Tener 1 persona ayudando a escanear, pagar y completar datos.
+- Mensaje corto: "Pagás y después completás tus datos para el carnet".

@@ -8,165 +8,354 @@
       name="description"
       content="Sumate como socio de Young Universitario. Elegí plan, pagá fácil y completá tus datos para recibir tu carnet."
     />
+    <meta name="theme-color" content="#B31319" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Sora', 'ui-sans-serif', 'system-ui'],
+            },
+            colors: {
+              clubRed: '#B31319',
+              clubRedDark: '#8F0F14',
+              clubBlack: '#111111',
+              clubLight: '#F6F7F9',
+            },
+            boxShadow: {
+              card: '0 10px 30px rgba(17, 17, 17, 0.12)',
+              glow: '0 0 0 4px rgba(179, 19, 25, 0.16)',
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      :root {
+        color-scheme: light;
+      }
+
+      .hero-bg {
+        background: radial-gradient(circle at 12% 16%, rgba(255, 255, 255, 0.25) 0%, transparent 50%),
+          linear-gradient(135deg, #111111 0%, #4b0d10 42%, #b31319 100%);
+      }
+
+      .hero-bg::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(255, 255, 255, 0.11) 0.5px, transparent 0.5px);
+        background-size: 3px 3px;
+        opacity: 0.24;
+        pointer-events: none;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 260ms ease, transform 260ms ease;
+      }
+
+      .reveal.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .faq-panel {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 260ms ease;
+      }
+
+      .faq-item.open .faq-panel {
+        max-height: 260px;
+      }
+
+      .faq-item.open .faq-icon {
+        transform: rotate(45deg);
+      }
+
+      .faq-icon {
+        transition: transform 220ms ease;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        .reveal,
+        .faq-panel,
+        .faq-icon,
+        .plan-card,
+        .cta-btn {
+          transition: none !important;
+          animation: none !important;
+        }
+
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
   </head>
-  <body>
-    <header class="hero reveal">
-      <div class="hero-overlay"></div>
-      <img
-        class="hero-bg"
-        src="aa09fbd4-3954-49e3-add9-6e8aaf43f6b5.JPG"
-        alt="Young Universitario en evento"
-        loading="eager"
-      />
-      <div class="container hero-content">
-        <p class="eyebrow">Campaña de socios 2026</p>
-        <h1 id="heroTitle">Hacete socio de Young Universitario</h1>
-        <p id="heroSubtitle" class="subtitle">
-          Apoyá al club de Young con una cuota simple. Pagás en segundos y listo.
-        </p>
-        <div class="hero-actions">
-          <a href="#planes" class="btn btn-primary">Hacerme socio</a>
-          <a id="instagramTop" href="#" target="_blank" rel="noopener" class="btn btn-secondary">
-            Ver Instagram
-          </a>
+
+  <body class="bg-clubLight text-clubBlack antialiased">
+    <header class="hero-bg relative isolate overflow-hidden">
+      <div class="relative mx-auto max-w-6xl px-4 pb-12 pt-9 sm:px-6 sm:pb-16 sm:pt-12 lg:px-8 lg:pb-20">
+        <div class="reveal max-w-3xl">
+          <span
+            id="heroBadge"
+            class="mb-4 inline-flex items-center rounded-full border border-white/35 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white"
+            >Campaña de socios • Young, Uruguay</span
+          >
+          <h1 id="heroTitle" class="text-4xl font-extrabold leading-[0.95] text-white sm:text-5xl lg:text-6xl">
+            Hacete socio de Young Universitario
+          </h1>
+          <p id="heroSubtitle" class="mt-4 max-w-2xl text-sm text-white/90 sm:text-base">
+            Apoyá al club en segundos: elegí plan, pagá fácil y completá tus datos para recibir tu carnet.
+          </p>
+
+          <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a
+              href="#planes"
+              class="cta-btn inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-bold text-clubBlack shadow-card outline-none ring-clubRed/50 transition duration-200 hover:-translate-y-0.5 hover:shadow-glow focus-visible:ring-4"
+              >Hacerme socio</a
+            >
+            <a
+              id="instagramTop"
+              href="#"
+              target="_blank"
+              rel="noopener"
+              class="cta-btn inline-flex items-center justify-center rounded-xl border border-white/45 bg-white/10 px-5 py-3 text-sm font-bold text-white outline-none ring-white/50 transition duration-200 hover:-translate-y-0.5 hover:bg-white/20 focus-visible:ring-4"
+              >Ver Instagram</a
+            >
+          </div>
         </div>
-        <p class="hero-note">Después del pago, completá tus datos para enviarte el carnet.</p>
       </div>
     </header>
 
-    <main>
-      <section class="section intro reveal">
-        <div class="container">
-          <h2>¿Qué es ser socio?</h2>
-          <p>
-            Es estar del lado del club todo el año. Tu aporte ayuda a sostener fútbol, formativas y nuevas
-            actividades para toda la ciudad.
-          </p>
-        </div>
+    <main class="mx-auto max-w-6xl px-4 pb-20 pt-8 sm:px-6 lg:px-8">
+      <section class="reveal">
+        <h2 class="text-2xl font-bold sm:text-3xl">¿Qué es ser socio?</h2>
+        <p class="mt-2 max-w-3xl text-sm text-zinc-700 sm:text-base">
+          Es bancar al club de tu ciudad todo el año. Tu aporte ayuda a sostener fútbol, formativas y actividades para la comunidad.
+        </p>
       </section>
 
-      <section class="section photos reveal">
-        <div class="container">
-          <h2>Young se mueve con su gente</h2>
-          <div class="photo-grid">
-            <img src="aa09fbd4-3954-49e3-add9-6e8aaf43f6b5.JPG" alt="Jornada de socios" loading="lazy" />
-            <img src="e0b545ca-be7e-45e3-8abd-6cc7acf92794.JPG" alt="Hinchas del club" loading="lazy" />
-            <img src="f4faa4ef-f7c6-47c1-99a5-a4287300b37a.JPG" alt="Actividad de Young Universitario" loading="lazy" />
-          </div>
+      <section id="planes" class="reveal mt-10">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <h2 class="text-2xl font-bold sm:text-3xl">Elegí tu plan</h2>
+          <span class="rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-clubRed">Pago por link + formulario</span>
         </div>
+
+        <div class="mt-5 grid gap-4 md:grid-cols-2">
+          <article
+            class="plan-card rounded-2xl border border-zinc-200 bg-white p-5 shadow-card transition duration-300 hover:-translate-y-1 hover:border-clubRed/50 hover:shadow-glow"
+          >
+            <p class="text-sm font-semibold text-zinc-600">Mensual</p>
+            <p id="priceMonthly" class="mt-1 text-4xl font-extrabold text-clubBlack">$0</p>
+            <ul class="mt-3 space-y-1 text-sm text-zinc-700">
+              <li>• Alta rápida en el momento</li>
+              <li>• Ideal para sumarte hoy</li>
+              <li>• Apoyo directo al club</li>
+            </ul>
+            <div class="mt-4 grid gap-2">
+              <a
+                id="payMonthly"
+                href="#"
+                target="_blank"
+                rel="noopener"
+                class="cta-btn inline-flex items-center justify-center rounded-xl bg-clubRed px-4 py-3 text-sm font-bold text-white outline-none ring-clubRed/50 transition duration-200 hover:bg-clubRedDark hover:shadow-glow focus-visible:ring-4"
+                >Pagar mensual</a
+              >
+              <a
+                id="formMonthly"
+                href="#"
+                target="_blank"
+                rel="noopener"
+                class="cta-btn inline-flex items-center justify-center rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm font-bold text-clubBlack outline-none ring-clubRed/40 transition duration-200 hover:border-clubRed hover:text-clubRed focus-visible:ring-4"
+                >Completar datos</a
+              >
+            </div>
+          </article>
+
+          <article
+            class="plan-card rounded-2xl border-2 border-clubRed bg-white p-5 shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-glow"
+          >
+            <p class="text-sm font-semibold text-zinc-600">Anual</p>
+            <p id="priceYearly" class="mt-1 text-4xl font-extrabold text-clubBlack">$0</p>
+            <ul class="mt-3 space-y-1 text-sm text-zinc-700">
+              <li>• Mejor costo por período</li>
+              <li>• Más compromiso con el club</li>
+              <li>• Te olvidás de renovar seguido</li>
+            </ul>
+            <div class="mt-4 grid gap-2">
+              <a
+                id="payYearly"
+                href="#"
+                target="_blank"
+                rel="noopener"
+                class="cta-btn inline-flex items-center justify-center rounded-xl bg-clubRed px-4 py-3 text-sm font-bold text-white outline-none ring-clubRed/50 transition duration-200 hover:bg-clubRedDark hover:shadow-glow focus-visible:ring-4"
+                >Pagar anual</a
+              >
+              <a
+                id="formYearly"
+                href="#"
+                target="_blank"
+                rel="noopener"
+                class="cta-btn inline-flex items-center justify-center rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm font-bold text-clubBlack outline-none ring-clubRed/40 transition duration-200 hover:border-clubRed hover:text-clubRed focus-visible:ring-4"
+                >Completar datos</a
+              >
+            </div>
+          </article>
+        </div>
+
+        <p class="mt-4 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-semibold text-clubRed">
+          Después del pago, completá tus datos para recibir el carnet.
+        </p>
       </section>
 
-      <section class="section benefits reveal">
-        <div class="container">
-          <h2>Beneficios de socio</h2>
-          <ul class="benefits-list">
-            <li>Descuentos en comercios locales (próximamente).</li>
-            <li>Prioridad en novedades y actividades del club.</li>
-            <li>Comunidad: apoyás al equipo de tu ciudad.</li>
-          </ul>
-          <p class="muted">Sección lista para cargar convenios reales cuando estén definidos.</p>
+      <section class="reveal mt-10">
+        <h2 class="text-2xl font-bold sm:text-3xl">Beneficios de ser socio</h2>
+        <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
+            <p class="text-lg">🎟️</p>
+            <p class="mt-1 text-sm font-semibold">Prioridad en actividades</p>
+          </article>
+          <article class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
+            <p class="text-lg">🏟️</p>
+            <p class="mt-1 text-sm font-semibold">Más fútbol para la ciudad</p>
+          </article>
+          <article class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
+            <p class="text-lg">🤝</p>
+            <p class="mt-1 text-sm font-semibold">Apoyo directo al club</p>
+          </article>
+          <article class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
+            <p class="text-lg">📣</p>
+            <p class="mt-1 text-sm font-semibold">Novedades antes que nadie</p>
+          </article>
+          <article class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
+            <p class="text-lg">💳</p>
+            <p class="mt-1 text-sm font-semibold">Pago simple y rápido</p>
+          </article>
+          <article class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
+            <p class="text-lg">❤️</p>
+            <p class="mt-1 text-sm font-semibold">Sentido de pertenencia</p>
+          </article>
         </div>
+        <p class="mt-3 text-sm text-zinc-600">Comercios adheridos se anuncian en Instagram.</p>
       </section>
 
-      <section id="planes" class="section plans reveal">
-        <div class="container">
-          <div class="plans-head">
-            <h2>Elegí tu plan</h2>
-            <span class="pill">Pago por link + formulario</span>
-          </div>
-
-          <div class="plan-grid">
-            <article class="plan-card">
-              <p class="plan-label">Semestral</p>
-              <p id="priceMonthly" class="plan-price">$0</p>
-              <p class="plan-note">Para sumarte por 6 meses.</p>
-              <a id="payMonthly" href="#" target="_blank" rel="noopener" class="btn btn-primary btn-full">
-                Pagar semestral
-              </a>
-              <a id="formMonthly" href="#" target="_blank" rel="noopener" class="btn btn-outline btn-full">
-                Completar datos
-              </a>
-            </article>
-
-            <article class="plan-card featured">
-              <p class="plan-label">Anual</p>
-              <p id="priceYearly" class="plan-price">$0</p>
-              <p class="plan-note">Más conveniente para apoyar todo el año.</p>
-              <a id="payYearly" href="#" target="_blank" rel="noopener" class="btn btn-primary btn-full">
-                Pagar anual
-              </a>
-              <a id="formYearly" href="#" target="_blank" rel="noopener" class="btn btn-outline btn-full">
-                Completar datos
-              </a>
-            </article>
-          </div>
-
-          <p class="payment-warning">
-            Importante: sin completar el formulario no podemos enviarte el carnet.
-          </p>
-        </div>
+      <section class="reveal mt-10">
+        <h2 class="text-2xl font-bold sm:text-3xl">Cómo funciona</h2>
+        <ol class="mt-5 grid gap-3 md:grid-cols-5">
+          <li class="rounded-xl border border-zinc-200 bg-white p-4 text-sm font-semibold shadow-sm">1. Escaneá</li>
+          <li class="rounded-xl border border-zinc-200 bg-white p-4 text-sm font-semibold shadow-sm">2. Elegí plan</li>
+          <li class="rounded-xl border border-zinc-200 bg-white p-4 text-sm font-semibold shadow-sm">3. Pagá</li>
+          <li class="rounded-xl border border-zinc-200 bg-white p-4 text-sm font-semibold shadow-sm">4. Completá tus datos</li>
+          <li class="rounded-xl border border-zinc-200 bg-white p-4 text-sm font-semibold shadow-sm">5. Recibís carnet</li>
+        </ol>
       </section>
 
-      <section class="section how-it-works reveal">
-        <div class="container">
-          <h2>Cómo funciona</h2>
-          <ol class="steps">
-            <li><strong>Escaneá</strong> el QR.</li>
-            <li><strong>Elegí</strong> semestral o anual.</li>
-            <li><strong>Pagá</strong> con el link.</li>
-            <li><strong>Completá</strong> tus datos.</li>
-            <li><strong>Recibís</strong> carnet de socio.</li>
-          </ol>
-        </div>
-      </section>
+      <section class="reveal mt-10">
+        <h2 class="text-2xl font-bold sm:text-3xl">Preguntas frecuentes</h2>
 
-      <section class="section faq reveal">
-        <div class="container">
-          <h2>Preguntas frecuentes</h2>
-          <div class="faq-list">
-            <details>
-              <summary>¿Cómo recibo el carnet?</summary>
-              <p>Luego del pago y formulario, el club se contacta para coordinar envío o entrega.</p>
-            </details>
-            <details>
-              <summary>¿Puedo pagar en el evento?</summary>
-              <p>Sí. El equipo te ayuda en el momento para completar el pago.</p>
-            </details>
-            <details>
-              <summary>¿Qué pasa si no tengo Mercado Pago?</summary>
-              <p>Acercate al equipo del club en el evento y te damos otra opción de pago.</p>
-            </details>
-            <details>
-              <summary>¿Cómo me contacto?</summary>
-              <p id="contactText">Escribinos por nuestros canales oficiales.</p>
-            </details>
-          </div>
+        <div class="mt-4 space-y-2">
+          <article class="faq-item rounded-xl border border-zinc-200 bg-white" data-faq>
+            <button
+              class="faq-trigger flex w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm font-bold text-clubBlack outline-none ring-clubRed/40 focus-visible:ring-4"
+              type="button"
+              aria-expanded="false"
+              aria-controls="faq-1"
+            >
+              ¿Cómo recibo el carnet?
+              <span class="faq-icon text-lg leading-none text-clubRed">+</span>
+            </button>
+            <div id="faq-1" class="faq-panel px-4" role="region">
+              <p class="pb-3 text-sm text-zinc-700">Luego del pago y del formulario, el club te contacta para coordinar entrega.</p>
+            </div>
+          </article>
+
+          <article class="faq-item rounded-xl border border-zinc-200 bg-white" data-faq>
+            <button
+              class="faq-trigger flex w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm font-bold text-clubBlack outline-none ring-clubRed/40 focus-visible:ring-4"
+              type="button"
+              aria-expanded="false"
+              aria-controls="faq-2"
+            >
+              ¿Puedo pagar en el evento?
+              <span class="faq-icon text-lg leading-none text-clubRed">+</span>
+            </button>
+            <div id="faq-2" class="faq-panel px-4" role="region">
+              <p class="pb-3 text-sm text-zinc-700">Sí. Te ayudamos ahí mismo para completar el pago desde tu celular.</p>
+            </div>
+          </article>
+
+          <article class="faq-item rounded-xl border border-zinc-200 bg-white" data-faq>
+            <button
+              class="faq-trigger flex w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm font-bold text-clubBlack outline-none ring-clubRed/40 focus-visible:ring-4"
+              type="button"
+              aria-expanded="false"
+              aria-controls="faq-3"
+            >
+              ¿Qué pasa si no tengo Mercado Pago?
+              <span class="faq-icon text-lg leading-none text-clubRed">+</span>
+            </button>
+            <div id="faq-3" class="faq-panel px-4" role="region">
+              <p class="pb-3 text-sm text-zinc-700">Acercate al equipo del club y te damos alternativa de pago.</p>
+            </div>
+          </article>
+
+          <article class="faq-item rounded-xl border border-zinc-200 bg-white" data-faq>
+            <button
+              class="faq-trigger flex w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm font-bold text-clubBlack outline-none ring-clubRed/40 focus-visible:ring-4"
+              type="button"
+              aria-expanded="false"
+              aria-controls="faq-4"
+            >
+              ¿Cómo me contacto?
+              <span class="faq-icon text-lg leading-none text-clubRed">+</span>
+            </button>
+            <div id="faq-4" class="faq-panel px-4" role="region">
+              <p id="contactText" class="pb-3 text-sm text-zinc-700">Escribinos por nuestros canales oficiales.</p>
+            </div>
+          </article>
         </div>
       </section>
     </main>
 
-    <footer class="footer reveal">
-      <div class="container footer-content">
-        <a id="instagramBottom" href="#" target="_blank" rel="noopener" class="btn btn-secondary">
-          Instagram del club
-        </a>
-        <a id="formBottom" href="#" target="_blank" rel="noopener" class="btn btn-primary">
-          Completar datos de socio
-        </a>
+    <footer class="border-t border-zinc-200 bg-white py-6">
+      <div class="mx-auto grid max-w-6xl gap-3 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
+        <a
+          id="instagramBottom"
+          href="#"
+          target="_blank"
+          rel="noopener"
+          class="cta-btn inline-flex items-center justify-center rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm font-bold text-clubBlack outline-none ring-clubRed/40 transition duration-200 hover:border-clubRed hover:text-clubRed focus-visible:ring-4"
+          >Instagram del club</a
+        >
+        <a
+          id="formBottom"
+          href="#"
+          target="_blank"
+          rel="noopener"
+          class="cta-btn inline-flex items-center justify-center rounded-xl bg-clubRed px-4 py-3 text-sm font-bold text-white outline-none ring-clubRed/50 transition duration-200 hover:bg-clubRedDark hover:shadow-glow focus-visible:ring-4"
+          >Completar datos</a
+        >
+        <p id="contactFooter" class="rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm font-semibold text-zinc-700">
+          Contacto: Instagram del club
+        </p>
       </div>
     </footer>
-
-    <div class="quick-bar">
-      <a href="#planes" class="btn btn-secondary">Planes</a>
-      <a id="quickForm" href="#" target="_blank" rel="noopener" class="btn btn-primary">Completar datos</a>
-    </div>
 
     <script src="config.js"></script>
     <script src="script.js"></script>

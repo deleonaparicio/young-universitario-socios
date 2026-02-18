@@ -9,5 +9,5 @@ window.LANDING_CONFIG = {
   CONTACT_WHATSAPP: '+598 99982686',
   CONTACT_EMAIL: 'deleonaparicio@gmail.com',
   N8N_WEBHOOK_URL: 'https://apadeleon.app.n8n.cloud/webhook-test/registro-socio',
-  FORM_KEY: 'cambiar-por-clave-secreta',
+  FORM_KEY: 'young-2026-socios-9f3k',
 };

@@ -11,113 +11,137 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800;900&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="hero">
-      <div class="container">
-        <p class="eyebrow">Campaña de socios</p>
+    <header class="hero reveal">
+      <div class="hero-overlay"></div>
+      <img
+        class="hero-bg"
+        src="aa09fbd4-3954-49e3-add9-6e8aaf43f6b5.JPG"
+        alt="Young Universitario en evento"
+        loading="eager"
+      />
+      <div class="container hero-content">
+        <p class="eyebrow">Campaña de socios 2026</p>
         <h1 id="heroTitle">Hacete socio de Young Universitario</h1>
         <p id="heroSubtitle" class="subtitle">
-          Apoyá al club de tu ciudad y ayudanos a seguir creciendo.
+          Apoyá al club de Young con una cuota simple. Pagás en segundos y listo.
         </p>
         <div class="hero-actions">
           <a href="#planes" class="btn btn-primary">Hacerme socio</a>
-          <a id="instagramTop" href="#" target="_blank" rel="noopener" class="btn btn-secondary"
-            >Ver Instagram</a
-          >
+          <a id="instagramTop" href="#" target="_blank" rel="noopener" class="btn btn-secondary">
+            Ver Instagram
+          </a>
         </div>
+        <p class="hero-note">Después del pago, completá tus datos para enviarte el carnet.</p>
       </div>
     </header>
 
     <main>
-      <section class="section intro">
+      <section class="section intro reveal">
         <div class="container">
           <h2>¿Qué es ser socio?</h2>
           <p>
-            Ser socio es bancar a Young Universitario de forma directa. Con tu aporte sostenemos fútbol,
-            formativas y más actividad para todo Young.
+            Es estar del lado del club todo el año. Tu aporte ayuda a sostener fútbol, formativas y nuevas
+            actividades para toda la ciudad.
           </p>
         </div>
       </section>
 
-      <section class="section benefits">
+      <section class="section photos reveal">
+        <div class="container">
+          <h2>Young se mueve con su gente</h2>
+          <div class="photo-grid">
+            <img src="aa09fbd4-3954-49e3-add9-6e8aaf43f6b5.JPG" alt="Jornada de socios" loading="lazy" />
+            <img src="e0b545ca-be7e-45e3-8abd-6cc7acf92794.JPG" alt="Hinchas del club" loading="lazy" />
+            <img src="f4faa4ef-f7c6-47c1-99a5-a4287300b37a.JPG" alt="Actividad de Young Universitario" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section benefits reveal">
         <div class="container">
           <h2>Beneficios de socio</h2>
           <ul class="benefits-list">
             <li>Descuentos en comercios locales (próximamente).</li>
             <li>Prioridad en novedades y actividades del club.</li>
-            <li>Orgullo de apoyar al equipo de tu ciudad.</li>
+            <li>Comunidad: apoyás al equipo de tu ciudad.</li>
           </ul>
-          <p class="muted">Esta sección queda lista para completar con convenios reales.</p>
+          <p class="muted">Sección lista para cargar convenios reales cuando estén definidos.</p>
         </div>
       </section>
 
-      <section id="planes" class="section plans">
+      <section id="planes" class="section plans reveal">
         <div class="container">
-          <h2>Elegí tu plan</h2>
+          <div class="plans-head">
+            <h2>Elegí tu plan</h2>
+            <span class="pill">Pago por link + formulario</span>
+          </div>
+
           <div class="plan-grid">
             <article class="plan-card">
               <p class="plan-label">Mensual</p>
               <p id="priceMonthly" class="plan-price">$0</p>
-              <p class="plan-note">Ideal para sumarte hoy mismo.</p>
-              <a id="payMonthly" href="#" target="_blank" rel="noopener" class="btn btn-primary btn-full"
-                >Pagar mensual</a
-              >
-              <a id="formMonthly" href="#" target="_blank" rel="noopener" class="btn btn-outline btn-full"
-                >Completar datos</a
-              >
+              <p class="plan-note">Para sumarte hoy.</p>
+              <a id="payMonthly" href="#" target="_blank" rel="noopener" class="btn btn-primary btn-full">
+                Pagar mensual
+              </a>
+              <a id="formMonthly" href="#" target="_blank" rel="noopener" class="btn btn-outline btn-full">
+                Completar datos
+              </a>
             </article>
 
             <article class="plan-card featured">
               <p class="plan-label">Anual</p>
               <p id="priceYearly" class="plan-price">$0</p>
-              <p class="plan-note">La mejor forma de apoyar todo el año.</p>
-              <a id="payYearly" href="#" target="_blank" rel="noopener" class="btn btn-primary btn-full"
-                >Pagar anual</a
-              >
-              <a id="formYearly" href="#" target="_blank" rel="noopener" class="btn btn-outline btn-full"
-                >Completar datos</a
-              >
+              <p class="plan-note">Más conveniente para apoyar todo el año.</p>
+              <a id="payYearly" href="#" target="_blank" rel="noopener" class="btn btn-primary btn-full">
+                Pagar anual
+              </a>
+              <a id="formYearly" href="#" target="_blank" rel="noopener" class="btn btn-outline btn-full">
+                Completar datos
+              </a>
             </article>
           </div>
+
           <p class="payment-warning">
-            Después del pago, completá tus datos para que te enviemos el carnet.
+            Importante: sin completar el formulario no podemos enviarte el carnet.
           </p>
         </div>
       </section>
 
-      <section class="section how-it-works">
+      <section class="section how-it-works reveal">
         <div class="container">
           <h2>Cómo funciona</h2>
           <ol class="steps">
-            <li>Escaneá</li>
-            <li>Elegí plan</li>
-            <li>Pagá</li>
-            <li>Completá tus datos</li>
-            <li>Recibís carnet</li>
+            <li><strong>Escaneá</strong> el QR.</li>
+            <li><strong>Elegí</strong> mensual o anual.</li>
+            <li><strong>Pagá</strong> con el link.</li>
+            <li><strong>Completá</strong> tus datos.</li>
+            <li><strong>Recibís</strong> carnet de socio.</li>
           </ol>
         </div>
       </section>
 
-      <section class="section faq">
+      <section class="section faq reveal">
         <div class="container">
           <h2>Preguntas frecuentes</h2>
           <div class="faq-list">
             <details>
               <summary>¿Cómo recibo el carnet?</summary>
-              <p>Después de pagar y completar el formulario, te contactamos para enviártelo.</p>
+              <p>Luego del pago y formulario, el club se contacta para coordinar envío o entrega.</p>
             </details>
             <details>
               <summary>¿Puedo pagar en el evento?</summary>
-              <p>Sí. Te ayudamos en el momento para hacer el pago desde tu celular.</p>
+              <p>Sí. El equipo te ayuda en el momento para completar el pago.</p>
             </details>
             <details>
               <summary>¿Qué pasa si no tengo Mercado Pago?</summary>
-              <p>Acercate al equipo del club en el evento y te damos una alternativa de pago.</p>
+              <p>Acercate al equipo del club en el evento y te damos otra opción de pago.</p>
             </details>
             <details>
               <summary>¿Cómo me contacto?</summary>
@@ -128,16 +152,21 @@
       </section>
     </main>
 
-    <footer class="footer">
+    <footer class="footer reveal">
       <div class="container footer-content">
-        <a id="instagramBottom" href="#" target="_blank" rel="noopener" class="btn btn-secondary"
-          >Instagram del club</a
-        >
-        <a id="formBottom" href="#" target="_blank" rel="noopener" class="btn btn-primary"
-          >Completar datos de socio</a
-        >
+        <a id="instagramBottom" href="#" target="_blank" rel="noopener" class="btn btn-secondary">
+          Instagram del club
+        </a>
+        <a id="formBottom" href="#" target="_blank" rel="noopener" class="btn btn-primary">
+          Completar datos de socio
+        </a>
       </div>
     </footer>
+
+    <div class="quick-bar">
+      <a href="#planes" class="btn btn-secondary">Planes</a>
+      <a id="quickForm" href="#" target="_blank" rel="noopener" class="btn btn-primary">Completar datos</a>
+    </div>
 
     <script src="config.js"></script>
     <script src="script.js"></script>

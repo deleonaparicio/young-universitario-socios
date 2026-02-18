@@ -14,7 +14,14 @@
     if (invalid) {
       el.href = '#';
       el.classList.add('disabled');
-      if (id === 'payMonthly' || id === 'payYearly' || id === 'formMonthly' || id === 'formYearly' || id === 'formBottom') {
+      if (
+        id === 'payMonthly' ||
+        id === 'payYearly' ||
+        id === 'formMonthly' ||
+        id === 'formYearly' ||
+        id === 'formBottom' ||
+        id === 'quickForm'
+      ) {
         el.textContent = el.textContent + ' (Configurar link)';
       }
       return;
@@ -26,7 +33,7 @@
   text('heroTitle', 'Hacete socio de ' + (config.CLUB_NAME || 'Young Universitario'));
   text(
     'heroSubtitle',
-    'Apoyá al club de ' + (config.CITY || 'Young') + ' y ayudanos a seguir creciendo con tu cuota social.'
+    'Apoyá al club de ' + (config.CITY || 'Young') + ' con una cuota simple. Pagás en segundos y listo.'
   );
 
   text('priceMonthly', config.PRICE_MONTHLY || '$ 0 / mes');
@@ -39,6 +46,7 @@
   setLink('formMonthly', config.FORM_URL);
   setLink('formYearly', config.FORM_URL);
   setLink('formBottom', config.FORM_URL);
+  setLink('quickForm', config.FORM_URL);
 
   var contactText = document.getElementById('contactText');
   if (contactText) {
@@ -49,5 +57,28 @@
     } else {
       contactText.textContent = 'Contactanos por Instagram para ayudarte.';
     }
+  }
+
+  var revealItems = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.16 }
+    );
+
+    revealItems.forEach(function (item) {
+      observer.observe(item);
+    });
+  } else {
+    revealItems.forEach(function (item) {
+      item.classList.add('is-visible');
+    });
   }
 })();

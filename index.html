@@ -99,13 +99,45 @@
         min-height: 1.5rem;
       }
 
-      .benefits-track {
-        scroll-snap-type: x mandatory;
-        scrollbar-width: thin;
+      .benefits-carousel {
+        position: relative;
+        overflow: hidden;
       }
 
-      .benefit-slide {
-        scroll-snap-align: start;
+      .benefit-panel {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transform: scale(1.01);
+        pointer-events: none;
+        transition: opacity 280ms ease, transform 280ms ease;
+      }
+
+      .benefit-panel.active {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: auto;
+      }
+
+      .benefit-dots {
+        position: absolute;
+        left: 50%;
+        bottom: 0.75rem;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0.45rem;
+      }
+
+      .benefit-dot {
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 999px;
+        border: 0;
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .benefit-dot.active {
+        background: #ffffff;
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -118,7 +150,9 @@
         .faq-icon,
         .plan-card,
         .cta-btn,
-        .field {
+        .field,
+        .benefit-panel,
+        .benefit-dot {
           transition: none !important;
           animation: none !important;
         }
@@ -155,22 +189,6 @@
               href="#tipoSocio"
               class="cta-btn inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-bold text-clubBlack shadow-card outline-none ring-clubRed/50 transition duration-200 hover:-translate-y-0.5 hover:shadow-glow focus-visible:ring-4"
               >Hacerme socio</a
-            >
-            <a
-              id="instagramTop"
-              href="#"
-              target="_blank"
-              rel="noopener"
-              class="cta-btn inline-flex items-center justify-center rounded-xl border border-white/45 bg-white/10 px-5 py-3 text-sm font-bold text-white outline-none ring-white/50 transition duration-200 hover:-translate-y-0.5 hover:bg-white/20 focus-visible:ring-4"
-              >Ver Instagram</a
-            >
-            <a
-              id="whatsappTop"
-              href="#"
-              target="_blank"
-              rel="noopener"
-              class="cta-btn inline-flex items-center justify-center rounded-xl border border-green-300 bg-green-500 px-5 py-3 text-sm font-bold text-white outline-none ring-green-300/50 transition duration-200 hover:-translate-y-0.5 hover:bg-green-600 focus-visible:ring-4"
-              >WhatsApp</a
             >
           </div>
         </div>
@@ -368,50 +386,38 @@
       </section>
 
       <section class="reveal mt-10">
-        <div class="flex items-center justify-between gap-3">
-          <h2 class="text-2xl font-bold sm:text-3xl">Beneficios de ser socio</h2>
-          <div class="hidden items-center gap-2 sm:flex">
-            <button
-              id="benefitsPrev"
-              type="button"
-              class="rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm font-bold text-zinc-700 transition hover:border-clubRed hover:text-clubRed"
-            >
-              ←
-            </button>
-            <button
-              id="benefitsNext"
-              type="button"
-              class="rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm font-bold text-zinc-700 transition hover:border-clubRed hover:text-clubRed"
-            >
-              →
-            </button>
-          </div>
-        </div>
+        <h2 class="text-2xl font-bold sm:text-3xl">Beneficios de ser socio</h2>
 
-        <div id="benefitsTrack" class="benefits-track mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
-          <article class="benefit-slide min-w-[85%] rounded-2xl border border-zinc-200 bg-white shadow-card sm:min-w-[48%] lg:min-w-[32%]">
-            <img src="aa09fbd4-3954-49e3-add9-6e8aaf43f6b5.JPG" alt="Sorteos mensuales" class="h-44 w-full rounded-t-2xl object-cover" loading="lazy" />
-            <div class="p-4">
+        <div id="benefitsCarousel" class="benefits-carousel mt-4 h-[20rem] rounded-2xl border border-zinc-200 bg-white shadow-card sm:h-[24rem]">
+          <article class="benefit-panel active">
+            <img src="aa09fbd4-3954-49e3-add9-6e8aaf43f6b5.JPG" alt="Sorteos mensuales" class="h-full w-full rounded-2xl object-cover" loading="lazy" />
+            <div class="absolute inset-x-0 bottom-0 rounded-b-2xl bg-gradient-to-t from-black/80 to-transparent p-5 text-white">
               <p class="text-lg">🎁</p>
-              <p class="mt-1 text-sm font-semibold">Sorteos mensuales para socios</p>
+              <p class="mt-1 text-base font-semibold">Sorteos mensuales para socios</p>
             </div>
           </article>
 
-          <article class="benefit-slide min-w-[85%] rounded-2xl border border-zinc-200 bg-white shadow-card sm:min-w-[48%] lg:min-w-[32%]">
-            <img src="f4faa4ef-f7c6-47c1-99a5-a4287300b37a.JPG" alt="Descuento en merchandising" class="h-44 w-full rounded-t-2xl object-cover" loading="lazy" />
-            <div class="p-4">
+          <article class="benefit-panel">
+            <img src="f4faa4ef-f7c6-47c1-99a5-a4287300b37a.JPG" alt="Descuento en merchandising" class="h-full w-full rounded-2xl object-cover" loading="lazy" />
+            <div class="absolute inset-x-0 bottom-0 rounded-b-2xl bg-gradient-to-t from-black/80 to-transparent p-5 text-white">
               <p class="text-lg">🧣</p>
-              <p class="mt-1 text-sm font-semibold">Descuento en merchandising del club</p>
+              <p class="mt-1 text-base font-semibold">Descuento en merchandising del club</p>
             </div>
           </article>
 
-          <article class="benefit-slide min-w-[85%] rounded-2xl border border-zinc-200 bg-white shadow-card sm:min-w-[48%] lg:min-w-[32%]">
-            <img src="e0b545ca-be7e-45e3-8abd-6cc7acf92794.JPG" alt="Descuentos en comercios locales" class="h-44 w-full rounded-t-2xl object-cover" loading="lazy" />
-            <div class="p-4">
+          <article class="benefit-panel">
+            <img src="e0b545ca-be7e-45e3-8abd-6cc7acf92794.JPG" alt="Descuentos en comercios locales" class="h-full w-full rounded-2xl object-cover" loading="lazy" />
+            <div class="absolute inset-x-0 bottom-0 rounded-b-2xl bg-gradient-to-t from-black/80 to-transparent p-5 text-white">
               <p class="text-lg">🏪</p>
-              <p class="mt-1 text-sm font-semibold">Descuentos en comercios locales</p>
+              <p class="mt-1 text-base font-semibold">Descuentos en comercios locales</p>
             </div>
           </article>
+
+          <div class="benefit-dots">
+            <button class="benefit-dot active" type="button" aria-label="Ver beneficio 1"></button>
+            <button class="benefit-dot" type="button" aria-label="Ver beneficio 2"></button>
+            <button class="benefit-dot" type="button" aria-label="Ver beneficio 3"></button>
+          </div>
         </div>
       </section>
 
@@ -483,7 +489,7 @@
     </main>
 
     <footer class="border-t border-zinc-200 bg-white py-6">
-      <div class="mx-auto grid max-w-6xl gap-3 px-4 sm:px-6 lg:grid-cols-4 lg:px-8">
+      <div class="mx-auto grid max-w-6xl gap-3 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
         <a
           id="instagramBottom"
           href="#"
@@ -500,14 +506,6 @@
           class="cta-btn inline-flex items-center justify-center rounded-xl border border-green-300 bg-green-500 px-4 py-3 text-sm font-bold text-white outline-none ring-green-300/50 transition duration-200 hover:bg-green-600 focus-visible:ring-4"
           >WhatsApp</a
         >
-        <a
-          href="#datos"
-          class="cta-btn inline-flex items-center justify-center rounded-xl bg-clubRed px-4 py-3 text-sm font-bold text-white outline-none ring-clubRed/50 transition duration-200 hover:bg-clubRedDark hover:shadow-glow focus-visible:ring-4"
-          >Completar datos</a
-        >
-        <p id="contactFooter" class="rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm font-semibold text-zinc-700">
-          Contacto: Instagram del club
-        </p>
       </div>
     </footer>
 

@@ -181,21 +181,47 @@
   }
 
   function handleBenefitsCarousel() {
-    var track = document.getElementById('benefitsTrack');
-    var prev = document.getElementById('benefitsPrev');
-    var next = document.getElementById('benefitsNext');
-    if (!track || !prev || !next) return;
+    var carousel = document.getElementById('benefitsCarousel');
+    if (!carousel) return;
 
-    var scrollAmount = function () {
-      return Math.max(track.clientWidth * 0.82, 280);
-    };
+    var panels = Array.prototype.slice.call(carousel.querySelectorAll('.benefit-panel'));
+    var dots = Array.prototype.slice.call(carousel.querySelectorAll('.benefit-dot'));
+    if (!panels.length || !dots.length || panels.length !== dots.length) return;
 
-    prev.addEventListener('click', function () {
-      track.scrollBy({ left: -scrollAmount(), behavior: reducedMotion ? 'auto' : 'smooth' });
+    var current = 0;
+    var timerId = null;
+
+    function paint(index) {
+      current = index;
+      panels.forEach(function (panel, i) {
+        panel.classList.toggle('active', i === current);
+      });
+      dots.forEach(function (dot, i) {
+        dot.classList.toggle('active', i === current);
+      });
+    }
+
+    function goNext() {
+      paint((current + 1) % panels.length);
+    }
+
+    dots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () {
+        paint(i);
+      });
     });
 
-    next.addEventListener('click', function () {
-      track.scrollBy({ left: scrollAmount(), behavior: reducedMotion ? 'auto' : 'smooth' });
+    paint(0);
+
+    if (reducedMotion) return;
+
+    timerId = window.setInterval(goNext, 3000);
+    carousel.addEventListener('mouseenter', function () {
+      if (timerId) window.clearInterval(timerId);
+      timerId = null;
+    });
+    carousel.addEventListener('mouseleave', function () {
+      if (!timerId) timerId = window.setInterval(goNext, 3000);
     });
   }
 
@@ -324,13 +350,11 @@
     setText('priceMonthly', config.PRICE_MONTHLY || '(Configurar precio)');
     setText('priceYearly', config.PRICE_YEARLY || '(Configurar precio)');
 
-    setLink('instagramTop', config.INSTAGRAM_URL);
     setLink('instagramBottom', config.INSTAGRAM_URL);
     setLink('payMonthly', config.MP_LINK_MONTHLY, '(Configurar link)');
     setLink('payYearly', config.MP_LINK_YEARLY, '(Configurar link)');
 
     var whatsappUrl = toWhatsappUrl(config.CONTACT_WHATSAPP, config.WHATSAPP_MESSAGE);
-    setLink('whatsappTop', whatsappUrl);
     setLink('whatsappBottom', whatsappUrl);
 
     var contactText = 'Instagram del club';
@@ -341,7 +365,6 @@
     }
 
     setText('contactText', contactText);
-    setText('contactFooter', 'Contacto: ' + contactText);
 
     var form = document.getElementById('socioForm');
     if (form) {

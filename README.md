@@ -17,12 +17,13 @@ window.LANDING_CONFIG = {
   CLUB_NAME: 'Young Universitario',
   CITY: 'Young, Uruguay',
   INSTAGRAM_URL: 'https://instagram.com/tu_perfil',
-  PRICE_MONTHLY: '600 pesos uruguayos',
-  PRICE_YEARLY: '1000 pesos uruguayos',
+  PRICE_MONTHLY: '2 cuotas de 700 pesos uruguayos',
+  PRICE_YEARLY: '1 cuota de 1100 pesos uruguayos',
   MP_LINK_MONTHLY: 'https://www.mercadopago.com/...',
-  MP_LINK_YEARLY: 'https://www.mercadopago.com/...',
+  MP_LINK_YEARLY: 'https://mpago.la/...',
   CONTACT_WHATSAPP: '+598XXXXXXXX',
   CONTACT_EMAIL: 'contacto@club.com',
+  WHATSAPP_MESSAGE: 'Hola! Quiero hacerme socio...',
   N8N_WEBHOOK_URL: 'https://n8n.tudominio.com/webhook/....',
   FORM_KEY: 'tu_clave_secreta',
 };
@@ -32,6 +33,16 @@ Notas:
 - Si falta un link, dejalo como `"(Configurar link)"`.
 - Para contacto alcanza con `CONTACT_WHATSAPP` o `CONTACT_EMAIL`.
 - `N8N_WEBHOOK_URL` y `FORM_KEY` son obligatorios para enviar el formulario.
+
+## Flujo actual
+
+1. Elegir tipo de socio: `nuevo` o `renovación`.
+2. Elegir plan y pagar por link.
+3. Completar formulario.
+
+Para renovación:
+- Se pide cédula sin puntos ni guiones.
+- Se habilita carga opcional de comprobante de Mercado Pago.
 
 ## Deploy en GitHub Pages
 
@@ -55,6 +66,7 @@ curl -X POST "WEBHOOK_URL" \
   -d '{
     "createdAt":"2026-02-18T12:00:00.000Z",
     "pageUrl":"https://deleonaparicio.github.io/young-universitario-socios/",
+    "member_type":"nuevo",
     "utm_source":"instagram",
     "utm_medium":"social",
     "utm_campaign":"socios_evento",
@@ -64,20 +76,15 @@ curl -X POST "WEBHOOK_URL" \
     "ci":"12345678",
     "telefono":"+59899999999",
     "email":"",
-    "plan":"mensual",
+    "plan":"semestral",
     "payment_ref":"MP-12345"
   }'
 ```
-
-Respuesta esperada en n8n:
-- Ideal: `{"ok": true, "message": "..."}`
-- Si responde error HTTP o CORS, la web mostrará mensaje de error.
 
 ## Troubleshooting
 
 - Error CORS:
   - Revisá que el webhook permita origen desde GitHub Pages.
-  - En n8n, habilitá CORS para tu dominio de Pages.
 - URL incorrecta:
   - Verificá `N8N_WEBHOOK_URL` en `config.js`.
 - Clave inválida:
@@ -90,4 +97,4 @@ Respuesta esperada en n8n:
 ## Recomendación de QR para evento
 
 - Recomendado: 1 QR a la landing.
-- Opcional: 2 QRs directos a pagos mensual/anual para filas rápidas.
+- Opcional: 2 QRs directos a pagos semestral/anual para filas rápidas.

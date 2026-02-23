@@ -26,6 +26,14 @@
     el.href = value;
   }
 
+  function toWhatsappUrl(phone, message) {
+    if (!phone) return '';
+    var cleanPhone = String(phone).replace(/[^\d]/g, '');
+    if (!cleanPhone) return '';
+    var text = encodeURIComponent(message || 'Hola! Quiero hacerme socio de Young Universitario.');
+    return 'https://wa.me/' + cleanPhone + '?text=' + text;
+  }
+
   function getUtmParams() {
     var params = new URLSearchParams(window.location.search);
     return {
@@ -69,6 +77,61 @@
     if (diff >= RATE_LIMIT_MS) return 0;
 
     return Math.ceil((RATE_LIMIT_MS - diff) / 1000);
+  }
+
+  function readFileAsBase64(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        var result = reader.result || '';
+        var base64 = String(result).split(',')[1] || '';
+        resolve(base64);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function setMemberType(type) {
+    var hidden = document.getElementById('memberTypeHidden');
+    var newFields = document.getElementById('newMemberFields');
+    var renewFields = document.getElementById('renewMemberFields');
+    var newRequired = document.querySelectorAll('[data-required-new]');
+    var renewRequired = document.querySelectorAll('[data-required-renew]');
+
+    if (hidden) hidden.value = type;
+
+    if (type === 'renovacion') {
+      if (newFields) newFields.classList.add('hidden');
+      if (renewFields) renewFields.classList.remove('hidden');
+      newRequired.forEach(function (el) {
+        el.required = false;
+      });
+      renewRequired.forEach(function (el) {
+        el.required = true;
+      });
+    } else {
+      if (newFields) newFields.classList.remove('hidden');
+      if (renewFields) renewFields.classList.add('hidden');
+      newRequired.forEach(function (el) {
+        el.required = true;
+      });
+      renewRequired.forEach(function (el) {
+        el.required = false;
+      });
+    }
+  }
+
+  function handleMemberTypeSwitch() {
+    var radios = document.querySelectorAll('input[name="memberType"]');
+    radios.forEach(function (radio) {
+      radio.addEventListener('change', function (event) {
+        setMemberType(event.target.value);
+      });
+    });
+
+    var checked = document.querySelector('input[name="memberType"]:checked');
+    setMemberType(checked ? checked.value : 'nuevo');
   }
 
   function handleFaq() {
@@ -117,11 +180,31 @@
     }
   }
 
+  function handleBenefitsCarousel() {
+    var track = document.getElementById('benefitsTrack');
+    var prev = document.getElementById('benefitsPrev');
+    var next = document.getElementById('benefitsNext');
+    if (!track || !prev || !next) return;
+
+    var scrollAmount = function () {
+      return Math.max(track.clientWidth * 0.82, 280);
+    };
+
+    prev.addEventListener('click', function () {
+      track.scrollBy({ left: -scrollAmount(), behavior: reducedMotion ? 'auto' : 'smooth' });
+    });
+
+    next.addEventListener('click', function () {
+      track.scrollBy({ left: scrollAmount(), behavior: reducedMotion ? 'auto' : 'smooth' });
+    });
+  }
+
   async function submitForm(event) {
     event.preventDefault();
 
     var form = event.currentTarget;
     var formData = new FormData(form);
+    var memberType = formData.get('member_type') || 'nuevo';
 
     if (formData.get('company')) {
       setStatus('No se pudo enviar. Probá nuevamente.', 'error');
@@ -149,16 +232,43 @@
       return;
     }
 
+    var ci = memberType === 'renovacion' ? String(formData.get('ci_renew') || '').trim() : String(formData.get('ci_new') || '').trim();
+
+    if (memberType === 'renovacion' && /[^0-9]/.test(ci)) {
+      setStatus('Para renovación ingresá la cédula sin puntos ni guiones.', 'error');
+      return;
+    }
+
     var payload = {
       createdAt: new Date().toISOString(),
       pageUrl: window.location.href,
-      nombre: String(formData.get('nombre') || '').trim(),
-      ci: String(formData.get('ci') || '').trim(),
-      telefono: String(formData.get('telefono_whatsapp') || '').trim(),
-      email: String(formData.get('email') || '').trim(),
+      member_type: memberType,
+      nombre: memberType === 'renovacion' ? '' : String(formData.get('nombre') || '').trim(),
+      ci: ci,
+      telefono: memberType === 'renovacion' ? '' : String(formData.get('telefono_whatsapp') || '').trim(),
+      email: memberType === 'renovacion' ? '' : String(formData.get('email') || '').trim(),
       plan: String(formData.get('plan') || '').trim(),
       payment_ref: String(formData.get('payment_ref') || '').trim(),
     };
+
+    var paymentProof = formData.get('payment_proof');
+    if (memberType === 'renovacion' && paymentProof && paymentProof.size > 0) {
+      if (paymentProof.size > 4 * 1024 * 1024) {
+        setStatus('El comprobante supera 4MB. Subí un archivo más liviano.', 'error');
+        return;
+      }
+
+      try {
+        payload.payment_proof = {
+          fileName: paymentProof.name,
+          mimeType: paymentProof.type || 'application/octet-stream',
+          base64: await readFileAsBase64(paymentProof),
+        };
+      } catch (fileError) {
+        setStatus('No se pudo leer el comprobante. Probá con otro archivo.', 'error');
+        return;
+      }
+    }
 
     var utm = getUtmParams();
     payload.utm_source = utm.utm_source;
@@ -199,6 +309,7 @@
 
       localStorage.setItem(RATE_LIMIT_KEY, String(Date.now()));
       form.reset();
+      setMemberType('nuevo');
       setStatus(successMessage, 'success');
     } catch (error) {
       setStatus(error.message || 'Error inesperado al enviar el formulario.', 'error');
@@ -218,6 +329,10 @@
     setLink('payMonthly', config.MP_LINK_MONTHLY, '(Configurar link)');
     setLink('payYearly', config.MP_LINK_YEARLY, '(Configurar link)');
 
+    var whatsappUrl = toWhatsappUrl(config.CONTACT_WHATSAPP, config.WHATSAPP_MESSAGE);
+    setLink('whatsappTop', whatsappUrl);
+    setLink('whatsappBottom', whatsappUrl);
+
     var contactText = 'Instagram del club';
     if (config.CONTACT_WHATSAPP) {
       contactText = 'WhatsApp: ' + config.CONTACT_WHATSAPP;
@@ -233,6 +348,8 @@
       form.addEventListener('submit', submitForm);
     }
 
+    handleMemberTypeSwitch();
+    handleBenefitsCarousel();
     handleFaq();
     handleReveal();
   }

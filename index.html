@@ -360,11 +360,6 @@
               Cédula de identidad * (sin puntos ni guiones)
               <input class="field mt-1" type="text" name="ci_renew" inputmode="numeric" pattern="[0-9]+" data-required-renew="true" />
             </label>
-
-            <label class="text-sm font-semibold text-zinc-800">
-              Comprobante de Mercado Pago (opcional)
-              <input class="field mt-1" type="file" name="payment_proof" accept="image/*,.pdf" />
-            </label>
           </div>
 
           <div class="mt-3 grid gap-3 sm:grid-cols-2">
@@ -381,6 +376,58 @@
               Referencia/ID de pago (si la tenés)
               <input class="field mt-1" type="text" name="payment_ref" />
             </label>
+          </div>
+
+          <div id="carnetSection" class="mt-4 rounded-xl border border-zinc-200 bg-zinc-50 p-4">
+            <p class="text-sm font-semibold text-zinc-800">¿Querés recibir carnet de socio?</p>
+            <div class="mt-2 grid gap-2 sm:grid-cols-2">
+              <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-800">
+                <input
+                  type="radio"
+                  name="wants_carnet"
+                  value="si"
+                  class="h-4 w-4 border-zinc-300 text-clubRed focus:ring-clubRed"
+                />
+                Sí
+              </label>
+              <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-800">
+                <input
+                  type="radio"
+                  name="wants_carnet"
+                  value="no"
+                  checked
+                  class="h-4 w-4 border-zinc-300 text-clubRed focus:ring-clubRed"
+                />
+                No
+              </label>
+            </div>
+
+            <div id="carnetFields" class="mt-3 hidden grid gap-3 sm:grid-cols-2">
+              <label class="text-sm font-semibold text-zinc-800">
+                Fecha de nacimiento *
+                <input class="field mt-1" type="date" name="birth_date" data-required-carnet="true" />
+              </label>
+
+              <label class="text-sm font-semibold text-zinc-800">
+                Correo electrónico *
+                <input class="field mt-1" type="email" name="carnet_email" data-required-carnet="true" />
+              </label>
+
+              <label class="text-sm font-semibold text-zinc-800">
+                Número de teléfono *
+                <input class="field mt-1" type="tel" name="carnet_phone" data-required-carnet="true" />
+              </label>
+
+              <label class="text-sm font-semibold text-zinc-800">
+                Categoría *
+                <select class="field mt-1" name="category" data-required-carnet="true">
+                  <option value="">Seleccioná categoría</option>
+                  <option value="hincha">Hincha</option>
+                  <option value="jugar">Jugar</option>
+                  <option value="ex-jugador">Ex-jugador</option>
+                </select>
+              </label>
+            </div>
           </div>
 
           <input type="text" name="company" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />

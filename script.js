@@ -79,23 +79,11 @@
     return Math.ceil((RATE_LIMIT_MS - diff) / 1000);
   }
 
-  function readFileAsBase64(file) {
-    return new Promise(function (resolve, reject) {
-      var reader = new FileReader();
-      reader.onload = function () {
-        var result = reader.result || '';
-        var base64 = String(result).split(',')[1] || '';
-        resolve(base64);
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  }
-
   function setMemberType(type) {
     var hidden = document.getElementById('memberTypeHidden');
     var newFields = document.getElementById('newMemberFields');
     var renewFields = document.getElementById('renewMemberFields');
+    var carnetSection = document.getElementById('carnetSection');
     var newRequired = document.querySelectorAll('[data-required-new]');
     var renewRequired = document.querySelectorAll('[data-required-renew]');
 
@@ -104,15 +92,18 @@
     if (type === 'renovacion') {
       if (newFields) newFields.classList.add('hidden');
       if (renewFields) renewFields.classList.remove('hidden');
+      if (carnetSection) carnetSection.classList.add('hidden');
       newRequired.forEach(function (el) {
         el.required = false;
       });
       renewRequired.forEach(function (el) {
         el.required = true;
       });
+      setCarnetChoice(false);
     } else {
       if (newFields) newFields.classList.remove('hidden');
       if (renewFields) renewFields.classList.add('hidden');
+      if (carnetSection) carnetSection.classList.remove('hidden');
       newRequired.forEach(function (el) {
         el.required = true;
       });
@@ -132,6 +123,35 @@
 
     var checked = document.querySelector('input[name="memberType"]:checked');
     setMemberType(checked ? checked.value : 'nuevo');
+  }
+
+  function setCarnetChoice(enabled) {
+    var carnetFields = document.getElementById('carnetFields');
+    var carnetRequired = document.querySelectorAll('[data-required-carnet]');
+
+    if (enabled) {
+      if (carnetFields) carnetFields.classList.remove('hidden');
+      carnetRequired.forEach(function (el) {
+        el.required = true;
+      });
+    } else {
+      if (carnetFields) carnetFields.classList.add('hidden');
+      carnetRequired.forEach(function (el) {
+        el.required = false;
+      });
+    }
+  }
+
+  function handleCarnetChoiceSwitch() {
+    var radios = document.querySelectorAll('input[name="wants_carnet"]');
+    radios.forEach(function (radio) {
+      radio.addEventListener('change', function (event) {
+        setCarnetChoice(event.target.value === 'si');
+      });
+    });
+
+    var checked = document.querySelector('input[name="wants_carnet"]:checked');
+    setCarnetChoice(checked && checked.value === 'si');
   }
 
   function handleFaq() {
@@ -317,36 +337,24 @@
       return;
     }
 
+    var wantsCarnet = memberType === 'nuevo' ? String(formData.get('wants_carnet') || 'no') : 'no';
+
     var payload = {
       createdAt: new Date().toISOString(),
       pageUrl: window.location.href,
       member_type: memberType,
+      wants_carnet: wantsCarnet,
       nombre: memberType === 'renovacion' ? '' : String(formData.get('nombre') || '').trim(),
       ci: ci,
       telefono: memberType === 'renovacion' ? '' : String(formData.get('telefono_whatsapp') || '').trim(),
       email: memberType === 'renovacion' ? '' : String(formData.get('email') || '').trim(),
       plan: String(formData.get('plan') || '').trim(),
       payment_ref: String(formData.get('payment_ref') || '').trim(),
+      birth_date: wantsCarnet === 'si' ? String(formData.get('birth_date') || '').trim() : '',
+      carnet_email: wantsCarnet === 'si' ? String(formData.get('carnet_email') || '').trim() : '',
+      carnet_phone: wantsCarnet === 'si' ? String(formData.get('carnet_phone') || '').trim() : '',
+      category: wantsCarnet === 'si' ? String(formData.get('category') || '').trim() : '',
     };
-
-    var paymentProof = formData.get('payment_proof');
-    if (memberType === 'renovacion' && paymentProof && paymentProof.size > 0) {
-      if (paymentProof.size > 4 * 1024 * 1024) {
-        setStatus('El comprobante supera 4MB. Subí un archivo más liviano.', 'error');
-        return;
-      }
-
-      try {
-        payload.payment_proof = {
-          fileName: paymentProof.name,
-          mimeType: paymentProof.type || 'application/octet-stream',
-          base64: await readFileAsBase64(paymentProof),
-        };
-      } catch (fileError) {
-        setStatus('No se pudo leer el comprobante. Probá con otro archivo.', 'error');
-        return;
-      }
-    }
 
     var utm = getUtmParams();
     payload.utm_source = utm.utm_source;
@@ -387,6 +395,7 @@
 
       localStorage.setItem(RATE_LIMIT_KEY, String(Date.now()));
       form.reset();
+      setCarnetChoice(false);
       setMemberType('nuevo');
       setStatus(successMessage, 'success');
     } catch (error) {
@@ -424,6 +433,7 @@
     }
 
     handleMemberTypeSwitch();
+    handleCarnetChoiceSwitch();
     handleBenefitsCarousel();
     handleFaq();
     handleReveal();

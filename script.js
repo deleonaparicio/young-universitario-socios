@@ -45,6 +45,12 @@
     };
   }
 
+  function normalizeCi(value) {
+    return String(value || '')
+      .replace(/[.\-\s]/g, '')
+      .trim();
+  }
+
   function setStatus(message, type) {
     var statusEl = document.getElementById('formStatus');
     if (!statusEl) return;
@@ -330,29 +336,46 @@
       return;
     }
 
-    var ci = memberType === 'renovacion' ? String(formData.get('ci_renew') || '').trim() : String(formData.get('ci_new') || '').trim();
+    var rawCi = memberType === 'renovacion' ? formData.get('ci_renew') : formData.get('ci_new');
+    var ci = normalizeCi(rawCi);
 
-    if (memberType === 'renovacion' && /[^0-9]/.test(ci)) {
-      setStatus('Para renovación ingresá la cédula sin puntos ni guiones.', 'error');
+    if (!ci) {
+      setStatus('Ingresá una cédula válida.', 'error');
+      return;
+    }
+
+    if (/[^0-9]/.test(ci)) {
+      setStatus('La cédula debe contener solo números (sin puntos ni guiones).', 'error');
       return;
     }
 
     var wantsCarnet = memberType === 'nuevo' ? String(formData.get('wants_carnet') || 'no') : 'no';
+    var plan = String(formData.get('plan') || '').trim();
+    if (plan !== 'semestral' && plan !== 'anual') {
+      setStatus('Seleccioná un plan válido.', 'error');
+      return;
+    }
 
+    var nowIso = new Date().toISOString();
     var payload = {
-      createdAt: new Date().toISOString(),
-      pageUrl: window.location.href,
       member_type: memberType,
-      wants_carnet: wantsCarnet,
-      nombre: memberType === 'renovacion' ? '' : String(formData.get('nombre') || '').trim(),
       ci: ci,
-      telefono: memberType === 'renovacion' ? '' : String(formData.get('telefono_whatsapp') || '').trim(),
-      email: memberType === 'renovacion' ? '' : String(formData.get('email') || '').trim(),
-      plan: String(formData.get('plan') || '').trim(),
+      plan: plan,
       payment_ref: String(formData.get('payment_ref') || '').trim(),
-      birth_date: wantsCarnet === 'si' ? String(formData.get('birth_date') || '').trim() : '',
-      category: wantsCarnet === 'si' ? String(formData.get('category') || '').trim() : '',
+      pageUrl: window.location.href,
     };
+
+    if (memberType === 'renovacion') {
+      payload.updatedAt = nowIso;
+    } else {
+      payload.createdAt = nowIso;
+      payload.nombre = String(formData.get('nombre') || '').trim();
+      payload.telefono = String(formData.get('telefono_whatsapp') || '').trim();
+      payload.email = String(formData.get('email') || '').trim();
+      payload.wants_carnet = wantsCarnet;
+      payload.birth_date = wantsCarnet === 'si' ? String(formData.get('birth_date') || '').trim() : '';
+      payload.category = wantsCarnet === 'si' ? String(formData.get('category') || '').trim() : '';
+    }
 
     var utm = getUtmParams();
     payload.utm_source = utm.utm_source;

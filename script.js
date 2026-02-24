@@ -436,12 +436,12 @@
     setText('priceMonthly', config.PRICE_MONTHLY || '(Configurar precio)');
     setText('priceYearly', config.PRICE_YEARLY || '(Configurar precio)');
 
-    setLink('instagramBottom', config.INSTAGRAM_URL);
+    setLink('instagramHero', config.INSTAGRAM_URL);
     setLink('payMonthly', config.MP_LINK_MONTHLY, '(Configurar link)');
     setLink('payYearly', config.MP_LINK_YEARLY, '(Configurar link)');
 
     var whatsappUrl = toWhatsappUrl(config.CONTACT_WHATSAPP, config.WHATSAPP_MESSAGE);
-    setLink('whatsappBottom', whatsappUrl);
+    setLink('whatsappFloat', whatsappUrl);
 
     var contactText = 'Instagram del club';
     if (config.CONTACT_WHATSAPP) {

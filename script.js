@@ -351,8 +351,6 @@
       plan: String(formData.get('plan') || '').trim(),
       payment_ref: String(formData.get('payment_ref') || '').trim(),
       birth_date: wantsCarnet === 'si' ? String(formData.get('birth_date') || '').trim() : '',
-      carnet_email: wantsCarnet === 'si' ? String(formData.get('carnet_email') || '').trim() : '',
-      carnet_phone: wantsCarnet === 'si' ? String(formData.get('carnet_phone') || '').trim() : '',
       category: wantsCarnet === 'si' ? String(formData.get('category') || '').trim() : '',
     };
 
@@ -381,6 +379,10 @@
         responseData = await response.json();
       } catch (parseError) {
         responseData = null;
+      }
+
+      if (responseData && responseData.ok === false) {
+        throw new Error(responseData.message || 'No se pudo enviar. Intentá nuevamente.');
       }
 
       if (!response.ok) {
